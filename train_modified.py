@@ -8,11 +8,13 @@ from wordcloud import WordCloud
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import svm
+from nltk import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.linear_model import LogisticRegression
 
+stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
 
 stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself",
