@@ -162,9 +162,13 @@ with open("step2_model_Solis.pkl", "wb") as file:
 # (not all combinations)
 
 ### bag of words
+
+# uncomment following two lines if you want to try a model with Count
 #count = CountVectorizer()
 #bag = count.fit_transform(data)
+
 # use binary parameter for binary count (1 if word is in document, 0 otherwise)
+# uncomment following two lines if you want to try a model with Binary Count
 #count_bin = CountVectorizer(binary=True)
 #bag_bin = count.fit_transform(data)
 
