@@ -4,7 +4,9 @@ $ pip install -r requirements
 
 # TRAINING
 
-$ python train.py
+There should be a training set in the directory "TRAIN" for this to work.
+
+$ python3 train.py
 
 Output: Performance metric values (accuracy, precision, recall, macro average).
 
