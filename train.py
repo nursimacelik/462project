@@ -13,6 +13,7 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
 
 stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
@@ -56,29 +57,45 @@ def print_metrics(prediction, labels):
     :prediction: array of strings, each element is one of the "P", "N", or "Z"
     :labels: same format as prediction
   """
+  N = len(labels)
   count = {"P":0, "N":0, "Z":0}
   labelCount = {"P":0, "N":0, "Z":0}
   tp = {"P":0, "N":0, "Z":0}
-  for i in range(len(prediction)):
+  tn = {"P":0, "N":0, "Z":0}
+  classes = ["P", "N", "Z"]
+  for i in range(N):
     count[prediction[i]] += 1
     labelCount[labels[i]] += 1
     if prediction[i] == labels[i]:
       tp[prediction[i]] += 1
+    for c in classes:
+      if c != prediction[i] and c != labels[i]:
+        tn[c] += 1
+  accuracy = {"P":0, "N":0, "Z":0}
   precision = {"P":0, "N":0, "Z":0}
   recall = {"P":0, "N":0, "Z":0}
-  print("Accuracy: " + str(sum(tp.values())/len(labels)))
+  print("\nOverall Accuracy: " + str(sum(tp.values())/N))
   for i in ["P", "N", "Z"]:
-    precision[i] = tp[i]/count[i]
-    recall[i] = tp[i]/labelCount[i]
-  print("Precisions:")
+    if count[i] == 0:
+      precision[i] = 1
+    else:
+      precision[i] = tp[i]/count[i]
+    if labelCount[i] == 0:
+      recall[i] = 1
+    else:
+      recall[i] = tp[i]/labelCount[i]
+    accuracy[i] = (tp[i] + tn[i])/N
+  print("\nClass Accuracies:")
+  print(accuracy)
+  print("\nClass Precisions:")
   print(precision)
-  print("Recalls:")
+  print("\nClass Recalls:")
   print(recall)
-  print("Macro average accuracy: ")
-  print(sum(recall.values()) / 3)
-  print("Macro average precision: ")
+  print("\nMacro average accuracy: ")
+  print(sum(accuracy.values()) / 3)
+  print("\nMacro average precision: ")
   print(sum(precision.values()) / 3)
-  print("Macro average recall: ")
+  print("\nMacro average recall: ")
   print(sum(recall.values()) / 3)
 
 
@@ -127,8 +144,9 @@ for file in os.listdir(FILE_PATH):
   labels.append(file[-5])
   f.close()
 
-N = len(labels)
 
+# word cloud for each class using bigrams
+# change 
 get_word_clouds(data_p, data_n, data_z, 3)
 
 # Best Model
