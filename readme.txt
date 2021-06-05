@@ -10,7 +10,7 @@ $ python3 train.py
 
 Output: Performance metric values (accuracy, precision, recall, macro average).
 
-All code for training resides in train.py. Models we tried are commented out, only the best one is uncommented. If you want to train a different model than the best one, make sure that the vectorizer (Count of Tf Idf) is set and model is uncommented.
+All code for training resides in train.py. Models we tried are commented out, only the best one is uncommented. If you want to train a different model than the best one, make sure that the vectorizer (Count or Tf Idf) is set and model is uncommented.
 
 # TESTING
 
