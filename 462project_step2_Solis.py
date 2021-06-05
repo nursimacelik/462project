@@ -34,8 +34,8 @@ def clean_data(text):
 
 
 if len(sys.argv) != 3:
-    print("Three arguments expected.")
-    exit()
+  print("Three arguments expected.")
+  exit()
 pkl_filename = sys.argv[1]
 FILE_PATH = sys.argv[2]
 
@@ -43,16 +43,18 @@ with open(pkl_filename, "rb") as file:
   vectorizer = pickle.load(file)
   clf = pickle.load(file)
 
-
+# read test data
 data = []
 labels = []
-for file in os.listdir(FILE_PATH):
-    filename=os.path.join(FILE_PATH,file)
-    f = open(filename, "r", encoding="latin-1")
-    text = f.read()
-    data.append(clean_data(text))
-    labels.append(file[-5])
-    f.close()
+dirs = os.listdir(FILE_PATH)
+dirsSorted = sorted(dirs, key=lambda filename:int(filename[:-6]))
+for file in dirsSorted:
+  filename=os.path.join(FILE_PATH,file)
+  f = open(filename, "r", encoding="latin-1")
+  text = f.read()
+  data.append(clean_data(text))
+  labels.append(file[-5])
+  f.close()
 
 
 features = vectorizer.transform(data)
